@@ -1,113 +1,112 @@
 * {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    font-family: monospace;
-    font-size: 48pt;
+	font-family: monospace;
+	font-size: 48pt;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
 }
 
 .flex-col {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
 }
 
-#timer {
-
-}
+#timer {}
 
 #timer>div {
-    font-weight: bold;
-    text-decoration: underline;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 #clocks-parent {
-    font-size: 16pt;
-    display: grid;
-    justify-content: center;
-    align-items: start;
-    justify-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+	font-size: 16pt;
+	display: grid;
+	justify-content: center;
+	align-items: end;
+	justify-items: center;
+	grid-template-columns: repeat(3, auto);
+	gap: 10px;
 }
 
 .one-clock {
-    border: 1px solid black;
-    width: min-content;
+	border: 1px solid black;
+	width: min-content;
 }
 
 .one-clock>div {
-    text-align: center;
+	text-align: center;
 }
 
 .one-clock>div:not(:last-child) {
-    border-bottom: 1px solid black;
+	border-bottom: 1px solid black;
 }
 
 .one-clock>.name {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .one-clock>.body {
-    padding: 4px;
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 30px 0;
-    padding-bottom: 24px;
+	padding: 4px;
+	display: grid;
+	grid-template-columns: 100px 1fr;
+	gap: 30px 0;
+	padding-bottom: 24px;
 }
+
 .one-clock>.body>text {
-    text-align: right;
+	text-align: right;
 }
 
 .one-clock>.body>div {
-    gap: 10px;
+	gap: 10px;
 }
 
-.one-clock>.body>div{
-    justify-content: flex-end;
+.one-clock>.body>div {
+	justify-content: flex-end;
 }
 
 .one-clock>.body hr {
-    width: 20px;
-    height: 20px;
-    border: black solid 3px;
-    position: relative;
-    overflow: visible;  
-    display: flex;
-    justify-content: center;
+	width: 20px;
+	height: 20px;
+	border: black solid 3px;
+	position: relative;
+	overflow: visible;
+	display: flex;
+	justify-content: center;
 }
 
 .one-clock>.body hr[e=t] {
-    background-color: limegreen;
-    box-shadow: 0 0 6px 1px limegreen;
+	background-color: limegreen;
+	box-shadow: 0 0 6px 1px limegreen;
 }
 
 .one-clock>.body hr[e=t]:after {
-    content: attr(v);
-    position: absolute;
-    top: 23px;
-    line-height: 1em;
+	content: attr(v);
+	position: absolute;
+	top: 23px;
+	line-height: 1em;
 }
 
 .one-clock>.body>div>div {
-    gap: 10px;
+	gap: 10px;
 }
 
 .clock-3>div {
-    gap: 40px !important;
+	gap: 40px !important;
 
 }
