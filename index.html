@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sancho Clocks</title>
+    
+	<script type="text/javascript" src="index.js"></script>
+    <link type="text/css" rel="stylesheet" href="index.css"/>
+</head>
+<body>
+<div class="hidden">
+    <div id="clocks-prefab" class="flex-col one-clock">
+        <div class="name"></div>
+        <div class="description"></div>
+        <div class="body">
+            <text>Часы:</text>
+            <div class="flex-row c-hours"></div>
+            <text>Минуты:</text>
+            <div class="flex-row c-minutes"></div>
+            <text>Секунды:</text>
+            <div class="flex-row c-seconds"></div>
+        </div>
+    </div>
+</div>
+
+    <div id="timer" class="flex-row">
+        <div class="hour"></div>:<div class="minute"></div>:<div class="second"></div>
+    </div>
+
+    <div id="clocks-parent">
+    </div>
+    
+</body>
+</html>
