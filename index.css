@@ -1,11 +1,13 @@
 * {
 	margin: 0;
 	padding: 0;
+
+	--spacing: 10px;
 }
 
 body {
 	font-family: monospace;
-	font-size: 48pt;
+	font-size: 16pt;
 }
 
 .hidden {
@@ -26,7 +28,9 @@ body {
 	justify-content: center;
 }
 
-#timer {}
+#timer {
+	font-size: 48pt;
+}
 
 #timer>div {
 	font-weight: bold;
@@ -40,12 +44,13 @@ body {
 	align-items: end;
 	justify-items: center;
 	grid-template-columns: repeat(3, auto);
-	gap: 10px;
+	gap: var(--spacing);
 }
 
 .one-clock {
 	border: 1px solid black;
 	width: min-content;
+	height: -webkit-fill-available;
 }
 
 .one-clock>div {
@@ -60,11 +65,15 @@ body {
 	font-weight: bold;
 }
 
+.one-clock>.description {
+	height: -webkit-fill-available;
+}
+
 .one-clock>.body {
 	padding: 4px;
 	display: grid;
 	grid-template-columns: 100px 1fr;
-	gap: 30px 0;
+	gap: calc(var(--spacing) * 3) 0;
 	padding-bottom: 24px;
 }
 
@@ -73,7 +82,7 @@ body {
 }
 
 .one-clock>.body>div {
-	gap: 10px;
+	gap: var(--spacing);
 }
 
 .one-clock>.body>div {
@@ -103,10 +112,19 @@ body {
 }
 
 .one-clock>.body>div>div {
-	gap: 10px;
+	gap: var(--spacing);
+}
+
+.one-clock>.menu {
+	gap: var(--spacing);
+	padding: calc(var(--spacing) / 2);
 }
 
 .clock-3>div {
 	gap: 40px !important;
+}
 
+
+.main-description {
+	text-align: center;
 }
