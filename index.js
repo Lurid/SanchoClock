@@ -1,45 +1,118 @@
-var ClockParent, ClockPrefab;
-var clocks = [];
+{ // Variables
+	var ClockParent, ClockPrefab;
+	var clocks = [];
+}
+
+{ // Small Functions
+	var zeroPad = (num, places) => String(num).padStart(places, '0');
+	var v0l = (value) => (((value < 10) ? "0" : "") + value);
+
+
+	function CtBwFaR(number, length) { // convert to binary with filling and reverse
+		let num = number;
+		let binary = [num % 2];
+		for (; num > 1;) {
+			num = parseInt(num / 2);
+			binary.push(num % 2);
+		}
+		binary = binary.reverse();
+		if (length > binary.length) {
+			binary = (Array(length - binary.length).fill(0)).concat(binary);
+		}
+		return binary;
+	}
+
+	function convertToBinary(number) {
+		let num = number;
+		let binary = [num % 2];
+		for (; num > 1;) {
+			num = parseInt(num / 2);
+			binary.push(num % 2);
+		}
+		return binary;
+	}
+
+	function test() {
+
+	}
+}
+
+{ //Tabs
+	var tabParent;
+	var headerButtonParent;
+	var tabPages = [];
+	var tabButtons = [];
+	var pageCount;
+
+	function LoadTabs(params) {
+		tabParent = document.getElementById("tabPages");
+		pageCount = tabParent.children.length;
+		
+		headerButtonParent = document.getElementById("tabButtons");
+
+		for(let i = 1; i <= pageCount; i++) {
+			tabPages[i] = tabParent.children[i - 1];
+			tabButtons[i] = headerButtonParent.children[i - 1];
+		}
+
+		TabPage(1);
+	}
+
+	function TabPage(PageID) {
+		for (let i = 1; i <= pageCount; i++) {
+			tabPages[i].style.display = (i == PageID) ? "block" : "none";
+			//tabButtons[i].style.borderColor = (i == PageID) ? 'var(--text-color1)' : '';
+		}
+	}
+}
 
 document.addEventListener("DOMContentLoaded", function () {
+	LoadTabs();
+
+	LoadDefaultElements();
+
+	CreateMainClock();
+
+	CreateCustomClocks();
+});
+
+
+function LoadDefaultElements() {
+	ClockParent = document.getElementById("clocks-parent");
+	ClockPrefab = document.getElementById("clocks-prefab");
+	ClockPrefab.removeAttribute('id');
+}
+
+function CreateMainClock() {
 	let timer = document.getElementById("timer");
 	let timer_h = timer.querySelector(".hour");
 	let timer_m = timer.querySelector(".minute");
 	let timer_s = timer.querySelector(".second");
 
-	let f = function () {
+	let mainClock = function () {
 		let date = new Date();
 		timer_h.innerText = v0l(date.getHours());
 		timer_m.innerText = v0l(date.getMinutes());
 		timer_s.innerText = v0l(date.getSeconds());
-		//timer.innerText = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-	}; f(); setInterval(f, 1000);
+	}; mainClock(); setInterval(mainClock, 1000);
+}
 
-	ClockParent = document.getElementById("clocks-parent");
-
-	ClockPrefab = document.getElementById("clocks-prefab");
-	ClockPrefab.removeAttribute('id');
-
-	CreateClocks();
-});
-
-function CreateClocks() {
+function CreateCustomClocks() {
 	CreateClock01();
 	CreateClock02();
 	CreateClock03();
+
+	CheckFunctionsExist();
+
+	setInterval(customClocksTick, 1000);
 }
 
-const zeroPad = (num, places) => String(num).padStart(places, '0');
-const v0l = (value) => (((value < 10) ? "0" : "") + value);
+function CheckFunctionsExist() {
+	clocks.forEach(c => { if (c.hasOwnProperty("tick") == false) c.timerEnabled = false; });
+}
 
-function convertToBinary(number) {
-	let num = number;
-	let binary = [num % 2];
-	for (; num > 1;) {
-		num = parseInt(num / 2);
-		binary.push(num % 2);
-	}
-	return binary;
+function customClocksTick() {
+	clocks.forEach(c => { if (c.timerEnabled) c.tick(); });
 }
 
 function CreateNewClock() {
@@ -53,6 +126,8 @@ function CreateNewClock() {
 	newClock.body.hours = newClock.elements.body.querySelector(".c-hours");
 	newClock.body.minutes = newClock.elements.body.querySelector(".c-minutes");
 	newClock.body.seconds = newClock.elements.body.querySelector(".c-seconds");
+
+	newClock.timerEnabled = true;
 
 	newClock.newName = function (name) { newClock.elements.name.innerText = name; }
 	newClock.newDescription = function (description) { newClock.elements.description.innerText = description; }
@@ -72,39 +147,26 @@ function CreateClock01() {
 	clock.body.minutes.innerHTML = '<hr e="f" v="32"><hr e="f" v="16"><hr e="f" v="8"><hr e="f" v="4"><hr e="f" v="2"><hr e="f" v="1">';
 	clock.body.seconds.innerHTML = '<hr e="f" v="32"><hr e="f" v="16"><hr e="f" v="8"><hr e="f" v="4"><hr e="f" v="2"><hr e="f" v="1">';
 
-	var hour_last = 0, minute_last = 0, seconds;
+	var hour_last = 0, minute_last = 0, hour, min, sec, i, j, k;
 
-	let f = function () {
+	clock.tick = function () {
 		let date = new Date();
 		if (hour_last != date.getHours()) {
 			hour_last = date.getHours();
-			let hour = convertToBinary(hour_last);
-			clock.body.hours.children[0].setAttribute('e', ((hour.length > 4) && Boolean(hour[4])) ? 't' : 'f');
-			clock.body.hours.children[1].setAttribute('e', ((hour.length > 3) && Boolean(hour[3])) ? 't' : 'f');
-			clock.body.hours.children[2].setAttribute('e', ((hour.length > 2) && Boolean(hour[2])) ? 't' : 'f');
-			clock.body.hours.children[3].setAttribute('e', ((hour.length > 1) && Boolean(hour[1])) ? 't' : 'f');
-			clock.body.hours.children[4].setAttribute('e', ((hour.length > 0) && Boolean(hour[0])) ? 't' : 'f');
+			hour = CtBwFaR(hour_last, 5);
+			for (i = 0; i < 5; i++) clock.body.hours.children[i].setAttribute('e', Boolean(hour[i]) ? 't' : 'f');
 		}
 
 		if (minute_last != date.getMinutes()) {
 			minute_last = date.getMinutes();
-			let min = convertToBinary(minute_last); //minute_last % 15;
-			clock.body.minutes.children[0].setAttribute('e', ((min.length > 5) && Boolean(min[5])) ? 't' : 'f');
-			clock.body.minutes.children[1].setAttribute('e', ((min.length > 4) && Boolean(min[4])) ? 't' : 'f');
-			clock.body.minutes.children[2].setAttribute('e', ((min.length > 3) && Boolean(min[3])) ? 't' : 'f');
-			clock.body.minutes.children[3].setAttribute('e', ((min.length > 2) && Boolean(min[2])) ? 't' : 'f');
-			clock.body.minutes.children[4].setAttribute('e', ((min.length > 1) && Boolean(min[1])) ? 't' : 'f');
-			clock.body.minutes.children[5].setAttribute('e', ((min.length > 0) && Boolean(min[0])) ? 't' : 'f');
+			min = CtBwFaR(minute_last, 6);
+			for (j = 0; j < 6; j++) clock.body.minutes.children[j].setAttribute('e', Boolean(min[j]) ? 't' : 'f');
 		}
 
-		seconds = convertToBinary(date.getSeconds()); //second_last % 15;
-		clock.body.seconds.children[0].setAttribute('e', ((seconds.length > 5) && Boolean(seconds[5])) ? 't' : 'f');
-		clock.body.seconds.children[1].setAttribute('e', ((seconds.length > 4) && Boolean(seconds[4])) ? 't' : 'f');
-		clock.body.seconds.children[2].setAttribute('e', ((seconds.length > 3) && Boolean(seconds[3])) ? 't' : 'f');
-		clock.body.seconds.children[3].setAttribute('e', ((seconds.length > 2) && Boolean(seconds[2])) ? 't' : 'f');
-		clock.body.seconds.children[4].setAttribute('e', ((seconds.length > 1) && Boolean(seconds[1])) ? 't' : 'f');
-		clock.body.seconds.children[5].setAttribute('e', ((seconds.length > 0) && Boolean(seconds[0])) ? 't' : 'f');
-	}; f(); setInterval(f, 1000);
+		sec = CtBwFaR(date.getSeconds(), 6);
+		for (k = 0; k < 6; k++) clock.body.seconds.children[k].setAttribute('e', Boolean(sec[k]) ? 't' : 'f');
+	};
+	clock.tick();
 }
 
 function CreateClock02() {
@@ -123,7 +185,7 @@ function CreateClock02() {
 
 	var hour, h0, h1, min, m0, m1, sec, s0, s1;
 
-	let f = function () {
+	clock.tick = function () {
 		let date = new Date();
 		if (hour_last != date.getHours()) {
 			hour_last = date.getHours();
@@ -167,7 +229,8 @@ function CreateClock02() {
 		clock.body.seconds.children[1].children[1].setAttribute('e', ((s1.length > 2) && Boolean(s1[2])) ? 't' : 'f');
 		clock.body.seconds.children[1].children[2].setAttribute('e', ((s1.length > 1) && Boolean(s1[1])) ? 't' : 'f');
 		clock.body.seconds.children[1].children[3].setAttribute('e', ((s1.length > 0) && Boolean(s1[0])) ? 't' : 'f');
-	}; f(); setInterval(f, 1000);
+	};
+	clock.tick();
 }
 
 function CreateClock03() {
@@ -183,7 +246,7 @@ function CreateClock03() {
 
 	var hour_last = 0, minute_last = 0, seconds = 0;
 
-	let f = function () {
+	clock.tick = function () {
 		let date = new Date();
 		if (hour_last != date.getHours()) {
 			hour_last = date.getHours();
@@ -213,9 +276,6 @@ function CreateClock03() {
 		clock.body.seconds.children[3].setAttribute('e', ((sec.length > 2) && Boolean(sec[2])) ? 't' : 'f');
 		clock.body.seconds.children[4].setAttribute('e', ((sec.length > 1) && Boolean(sec[1])) ? 't' : 'f');
 		clock.body.seconds.children[5].setAttribute('e', ((sec.length > 0) && Boolean(sec[0])) ? 't' : 'f');
-	}; f(); setInterval(f, 1000);
-}
-
-function test() {
-
+	};
+	clock.tick();
 }
