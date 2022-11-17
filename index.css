@@ -14,11 +14,46 @@ body {
 	display: none;
 }
 
-header>div {
+header {
 	display: flex;
-    justify-content: center;
-    gap: 0 var(--spacing);
-    padding: calc(var(--spacing) / 2);
+	justify-content: center;
+	background-color: silver;
+}
+
+header>#tabButtons {
+	width: 1024px;
+	display: grid;
+	justify-content: center;
+	align-items: end;
+	justify-items: center;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0 var(--spacing);
+	padding: 2px 2px 3px;
+}
+
+header button {
+	width: -webkit-fill-available;
+	border: 1px solid black;
+	background-color: white;
+	padding: 3px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 16pt;
+    white-space: nowrap;
+}
+
+#tabPages {
+	display: flex;
+	justify-content: center;
+}
+
+#tabPages>div {
+	width: 1024px;
+}
+
+#tabPages>div:nth-child(n+2) {
+	text-align: center;
+	font-family: system-ui;
 }
 
 .flex-row {
@@ -50,13 +85,13 @@ header>div {
 	justify-content: center;
 	align-items: end;
 	justify-items: center;
-	grid-template-columns: repeat(3, auto);
+	grid-template-columns: repeat(2, 1fr);
 	gap: var(--spacing);
 }
 
 .one-clock {
 	border: 1px solid black;
-	width: min-content;
+	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 }
 
@@ -73,15 +108,20 @@ header>div {
 }
 
 .one-clock>.description {
-	height: -webkit-fill-available;
+	max-height: 100%;
+	height: 100%;
+	overflow: auto;
 }
 
 .one-clock>.body {
+	max-height: 100%;
 	padding: 4px;
 	display: grid;
-	grid-template-columns: 100px 1fr;
+	grid-template-columns: repeat(2, min-content);
 	gap: calc(var(--spacing) * 3) 0;
 	padding-bottom: 24px;
+	justify-content: center;
+    align-content: center;
 }
 
 .one-clock>.body>text {
@@ -125,6 +165,10 @@ header>div {
 .one-clock>.menu {
 	gap: var(--spacing);
 	padding: calc(var(--spacing) / 2);
+}
+
+.clock-top-label {
+	justify-content: space-around !important;
 }
 
 .clock-3>div {

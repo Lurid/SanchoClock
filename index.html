@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
 	<meta charset="UTF-8">
@@ -14,7 +14,11 @@
 <body>
 	<div class="hidden">
 		<div id="clocks-prefab" class="flex-col one-clock">
-			<div class="name"></div>
+			<div class="flex-row clock-top-label">
+				<div class="name"></div>
+				<div class="status"></div>
+				<div class="time flex-row"></div>
+			</div>
 			<div class="description"></div>
 			<div class="body">
 				<text>Часы:</text>
@@ -25,8 +29,8 @@
 				<div class="flex-row c-seconds"></div>
 			</div>
 			<div class="flex-row menu">
-				<button class="b-stop">Остановить</button>
-				<button class="b-start">Запустить</button>
+				<button class="b-stop" onclick="setClockState(this, false)">Остановить</button>
+				<button class="b-start" onclick="setClockState(this, true)">Запустить</button>
 			</div>
 		</div>
 	</div>
@@ -54,14 +58,19 @@
 		<div>
 			<div class="main-description">
 				Задача: сделать непонятные на первый взгляд часы, c использованием битового представления данных.
-				Для расчёта используется только суммирование чисел в одном ряду.
-
-				Аналогичные проекты:
+				Для расчёта используется только суммирование чисел в одном ряду.<br>
+				Аналогичные проекты: данные отсутствуют.
 			</div>
 		</div>
 
 		<div>
-			текст
+			Реализация отсутствует.<br>
+			Предполагается имитация функций стандартных часов CASIO:<br>
+			1. Настройка времени (и даты) на главном экране.<br>
+			2. Установка времени будильника.<br>
+			2. Срабатывание будильника в указанное время.<br>
+			3. Секундомер.<br>
+			4. Второе время.<br>
 		</div>
 
 		<div>
@@ -69,7 +78,7 @@
 			<br>
 			Мой ВК: <a href="https://vk.com/lur_id">vk.com/lur_id</a>
 		</div>
-
+	</div>
 </body>
 
 </html>
